@@ -42,6 +42,9 @@ def get_links(soup):
 
 
 def get_mp3(video_list, download_dir):
+    if not os.path.exists(download_dir):
+        os.makedirs(download_dir)
+
     for idx, video in enumerate(video_list):
         yt = YouTube(video)
         stream = yt.streams.get_lowest_resolution()
@@ -49,12 +52,13 @@ def get_mp3(video_list, download_dir):
         stream.download(output_path=output_path)
         print(f'Downloaded ({idx + 1}): {yt.title}')
 
-    files = os.listdir(download_dir)
-    for file in files:
-        input_file = f'{download_dir}/{file}'
-        output_file_name = file.split('.')[0] + '.mp3'
-        output_file = f'{download_dir}/{output_file_name}'
-        convert_to_mp3(input_file, output_file)
+        files = os.listdir(download_dir)
+        for file in files:
+            if file.endswith('.mp4'):
+                input_file = f'{download_dir}/{file}'
+                output_file_name = file.split('.')[0] + '.mp3'
+                output_file = f'{download_dir}/{output_file_name}'
+                convert_to_mp3(input_file, output_file)
 
 
 def convert_to_mp3(in_file, out_file):
