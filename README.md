@@ -1,0 +1,2 @@
+- Download the script and install requirements.txt
+- edit the variables playlist_url (disclaimer: playlist should be public) and download_dir and run the script
